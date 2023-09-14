@@ -12,7 +12,7 @@ import { Web3ClientPlugin } from "@maticnetwork/maticjs-ethers";
 
 use(Web3ClientPlugin);
 
-export async function getZkEvmClient(network = "testnet", version = "mumbai") {
+export async function getZkEvmClient(network = "testnet", version = "blueberry") {
   try {
     const zkEvmClient = new ZkEvmClient();
     return await zkEvmClient.init({
