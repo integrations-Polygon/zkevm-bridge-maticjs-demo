@@ -1,21 +1,30 @@
-import { HardhatUserConfig } from "hardhat/config";
+import { HardhatUserConfig, task } from "hardhat/config";
 import "@nomiclabs/hardhat-ethers";
 import "@nomiclabs/hardhat-waffle";
-import dotenv from "dotenv";
-import "hardhat-deploy";
 import "solidity-coverage";
 import "@typechain/hardhat";
 import "hardhat-gas-reporter";
 import "@nomiclabs/hardhat-etherscan";
-dotenv.config();
+import {
+  getExplorerApiKeyGoerli,
+  getPrivateKeyGoerli,
+  getZkEvmRpcUrl,
+  getExplorerApiKeyZkEvm,
+  getInfuraProjectId,
+  getPrivateKeyZkEvm,
+} from "./config";
+
+task("accounts", "Prints the list of accounts", async (taskArgs, hre) => {
+  const accounts = await hre.ethers.getSigners();
+
+  for (const account of accounts) {
+    console.log(account.address);
+  }
+});
 
 const config: HardhatUserConfig = {
   solidity: {
-    compilers: [
-      {
-        version: "0.8.21",
-      },
-    ],
+    version: "0.8.21",
     settings: {
       optimizer: {
         enabled: true,
@@ -25,22 +34,15 @@ const config: HardhatUserConfig = {
   },
   networks: {
     zkEVM: {
-      url: process.env.ZKEVM_RPC_URL,
+      url: getZkEvmRpcUrl(),
       gasPrice: "auto",
-      accounts: process.env.PRIVATE_KEY !== undefined ? [process.env.PRIVATE_KEY] : [],
+      accounts: getPrivateKeyZkEvm() !== undefined ? [getPrivateKeyZkEvm()] : [],
     },
     goerli: {
-      url: `https://goerli.infura.io/v3/${process.env.INFURA_PROJECT_ID}`,
+      url: `https://goerli.infura.io/v3/${getInfuraProjectId()}`,
       gasPrice: "auto",
-      accounts: process.env.PRIVATE_KEY_GOERLI !== undefined ? [process.env.PRIVATE_KEY_GOERLI] : [],
+      accounts: getPrivateKeyGoerli() !== undefined ? [getPrivateKeyGoerli()] : [],
     },
-  },
-  namedAccounts: {
-    deployer: 0,
-    admin: 1,
-    admin1: 2,
-    user: 3,
-    user1: 4,
   },
   paths: {
     sources: "src",
@@ -54,15 +56,15 @@ const config: HardhatUserConfig = {
     currency: "USD",
   },
   etherscan: {
-    //apiKey: process.env.EXPLORER_API_KEY_ETHEREUM || "",
-    apiKey: process.env.EXPLORER_API_KEY_POLYGON || "",
+    //apiKey: getExplorerApiKeyGoerli() || "",
+    apiKey: getExplorerApiKeyZkEvm() || "",
     customChains: [
       {
         network: "zkEVM",
-        chainId: 1442,
+        chainId: 1422,
         urls: {
-          apiURL: "https://explorer.public.zkevm-test.net/api",
-          browserURL: "https://explorer.public.zkevm-test.net/",
+          apiURL: "https://api-zkevm.polygonscan.com/api",
+          browserURL: "https://zkevm.polygonscan.com/",
         },
       },
     ],
