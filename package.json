@@ -1,0 +1,62 @@
+{
+  "name": "zkevm-bridge-maticjs-demo",
+  "version": "1.0.0",
+  "description": "simple demo showcase for erc20 token bridging on polygon zkevm brdige using maticjs",
+  "main": "index.js",
+  "scripts": {
+    "clean": "npx hardhat clean",
+    "compile": "npx hardhat compile",
+    "deployERC20:zkEVM": "npx hardhat --network zkEVM deploy",
+    "deployERC20:goerli": "npx hardhat --network goerli deploy",
+    "verifyERC20:zkEVM": "npx hardhat --network zkEVM etherscan-verify",
+    "verifyERC20:goerli": "npx hardhat --network goerli etherscan-verify"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/integrations-Polygon/zkevm-bridge-maticjs-demo.git"
+  },
+  "author": "Gulam Rasul Shah",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@0.3.0-beta.10",
+    "@nomiclabs/hardhat-etherscan": "^3.1.7",
+    "@nomiclabs/hardhat-waffle": "^2.0.6",
+    "@truffle/hdwallet-provider": "^2.0.15",
+    "@typechain/ethers-v5": "^7.0.1",
+    "@typechain/hardhat": "^2.0.2",
+    "@types/node": "^18.11.10",
+    "@typescript-eslint/eslint-plugin": "^4.26.1",
+    "@typescript-eslint/parser": "^4.26.1",
+    "eslint": "^7.28.0",
+    "eslint-config-prettier": "^8.3.0",
+    "ethereum-waffle": "^3.2.0",
+    "ethers": "^5.3.1",
+    "hardhat": "^2.3.3",
+    "hardhat-deploy": "^0.8.7",
+    "hardhat-gas-reporter": "^1.0.9",
+    "lint-staged": "^13.0.4",
+    "prettier": "^2.8.0",
+    "prettier-plugin-solidity": "^1.0.0",
+    "solhint": "^3.3.6",
+    "solhint-plugin-prettier": "^0.0.5",
+    "solidity-coverage": "^0.8.4",
+    "ts-generator": "^0.1.1",
+    "ts-node": "^10.9.1",
+    "typechain": "^8.1.1",
+    "typescript": "^4.9.3"
+  },
+  "dependencies": {
+    "@maticnetwork/maticjs": "^3.6.6",
+    "@maticnetwork/maticjs-web3": "^1.0.4",
+    "@openzeppelin/contracts": "^4.9.3",
+    "dotenv": "^16.3.1",
+    "prompt-sync": "^4.2.0"
+  },
+  "lint-staged": {
+    "*.{ts,json,sol,md,yml}": "prettier --write"
+  },
+  "bugs": {
+    "url": "https://github.com/integrations-Polygon/zkevm-bridge-maticjs-demo/issues"
+  },
+  "homepage": "https://github.com/integrations-Polygon/zkevm-bridge-maticjs-demo#readme"
+}
