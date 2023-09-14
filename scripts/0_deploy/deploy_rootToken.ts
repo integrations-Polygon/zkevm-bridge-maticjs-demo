@@ -2,7 +2,7 @@ import { ethers } from "hardhat";
 import { sleep } from "../utils/sleep";
 import { RootToken__factory } from "../../src/types";
 
-async function deploy() {
+async function deployRootToken() {
   // get the contract to deploy
   const RootToken = (await ethers.getContractFactory("RootToken")) as RootToken__factory;
   const rootToken = await RootToken.deploy();
@@ -13,4 +13,4 @@ async function deploy() {
   console.log(`Contract Details: https://goerli.etherscan.io/address/${rootToken.address}`);
 }
 
-deploy();
+deployRootToken();

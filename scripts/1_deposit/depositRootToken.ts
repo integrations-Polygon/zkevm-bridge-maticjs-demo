@@ -14,6 +14,7 @@ const depositRootToken = async () => {
 
     const rootTokenAddress = prompt("Enter the address of Root Token to bridge: ");
     if (!rootTokenAddress) return console.log("The address of Root Token to bridge cannot be null");
+    if (rootTokenAddress.length !== 42) return console.log(`${rootTokenAddress} is not a valid address`);
 
     const amount = prompt("Enter the total amount of Root Token to bridge: ");
     if (!amount) return console.log("Total amount of Root Token to bridge cannot be null");
@@ -27,12 +28,12 @@ const depositRootToken = async () => {
     */
     const zkEvmClient = await getZkEvmClient();
     if (zkEvmClient) {
-      let rootToken = await zkEvmClient.erc20(rootTokenAddress, true);
+      let rootToken = zkEvmClient.erc20(rootTokenAddress, true);
 
       /* ---------------------------- APPROVE ---------------------------- */
 
       /* 
-        APPROVE ERC721 PREDICATE CONTRACT 
+        APPROVE ROOT TOKEN 
       */
       console.log("\n-----------------------------------------");
       console.log("APPROVE - ROOT TOKEN TO BRIDGE");
@@ -49,8 +50,8 @@ const depositRootToken = async () => {
       /* ---------------------------- DEPOSIT ---------------------------- */
 
       /* 
-              DEPOSIT NFT
-          */
+        DEPOSIT ROOT TOKEN
+      */
       console.log("\n-----------------------------------------");
       console.log("DEPOSIT - ROOT TOKEN TO ZKEVM BRIDGE CONTRACT");
       console.log("-----------------------------------------\n");
@@ -64,7 +65,7 @@ const depositRootToken = async () => {
       console.error("zkEvmClient is undefined");
     }
   } catch (error) {
-    console.log("Error in despositERC721: ", error);
+    console.log("Error in depositRootToken: ", error);
   }
 };
 
