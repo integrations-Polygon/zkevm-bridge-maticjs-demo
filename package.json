@@ -9,7 +9,13 @@
     "deployERC20:zkEVM": "npx hardhat --network zkEVM deploy",
     "deployERC20:goerli": "npx hardhat --network goerli deploy",
     "verifyERC20:zkEVM": "npx hardhat --network zkEVM etherscan-verify",
-    "verifyERC20:goerli": "npx hardhat --network goerli etherscan-verify"
+    "verifyERC20:goerli": "npx hardhat --network goerli etherscan-verify",
+    "lint": "eslint \"**/*.{js,ts}\" && solhint src/**/*.sol",
+    "lint:fix": "eslint --fix \"**/*.{js,ts}\" && solhint --fix src/**/*.sol",
+    "format": "prettier --check \"**/*.{ts,js,sol}\"",
+    "format:fix": "prettier --write \"**/*.{ts,js,sol}\"",
+    "gas": "cross-env REPORT_GAS=true hardhat test",
+    "coverage": "cross-env HARDHAT_DEPLOY_FIXTURE=true hardhat coverage"
   },
   "repository": {
     "type": "git",
@@ -27,6 +33,7 @@
     "@types/node": "^18.11.10",
     "@typescript-eslint/eslint-plugin": "^4.26.1",
     "@typescript-eslint/parser": "^4.26.1",
+    "crossenv": "^0.0.2-security",
     "eslint": "^7.28.0",
     "eslint-config-prettier": "^8.3.0",
     "ethereum-waffle": "^3.2.0",
