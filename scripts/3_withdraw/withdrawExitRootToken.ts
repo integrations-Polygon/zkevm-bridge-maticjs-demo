@@ -18,9 +18,7 @@ export async function withdrawExitRootToken() {
     if (!rootTokenAddress) return console.log("The address of Root Token to withdrawl cannot be null");
     if (rootTokenAddress.length !== 42) return console.log(`${rootTokenAddress} is not a valid address`);
 
-    const transactionHash = prompt(
-      "Enter the transaction hash of the deposited Root Token on bridge contract: "
-    );
+    const transactionHash = prompt("Enter the transaction hash of the burned token on L2: ");
     if (!transactionHash) return console.log("The address of Root Token to bridge cannot be null");
     if (transactionHash.length !== 66)
       return console.log(`${transactionHash} is not a valid transaction hash`);
@@ -32,7 +30,7 @@ export async function withdrawExitRootToken() {
     */
     const zkEvmClient: ZkEvmClient | undefined = await getZkEvmClient();
     if (zkEvmClient) {
-      let rootToken: ERC20 = zkEvmClient.erc20(rootTokenAddress);
+      let rootToken: ERC20 = zkEvmClient.erc20(rootTokenAddress, true);
 
       /* ---------------------------- WITHDRAW EXIT ---------------------------- */
 
