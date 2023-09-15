@@ -8,10 +8,8 @@
     "compile": "npx hardhat compile",
     "deploy": "npx hardhat run --network goerli scripts/0_deploy/deploy_rootToken.ts",
     "startScript": "npx hardhat run scripts/startScript.ts",
-    "lint": "eslint \"**/*.{js,ts}\" && solhint src/**/*.sol",
-    "lint:fix": "eslint --fix \"**/*.{js,ts}\" && solhint --fix src/**/*.sol",
-    "format": "prettier --check \"**/*.{ts,js,sol}\"",
-    "format:fix": "prettier --write \"**/*.{ts,js,sol}\"",
+    "prettier": "prettier --check \"**/*.{ts,js,sol}\"",
+    "prettier:fix": "prettier --write \"**/*.{ts,js,sol}\"",
     "gas": "cross-env REPORT_GAS=true hardhat test",
     "coverage": "cross-env HARDHAT_DEPLOY_FIXTURE=true hardhat coverage"
   },
