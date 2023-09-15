@@ -11,7 +11,7 @@ export const getRootUser = () => {
   return rootUser;
 };
 
-export const getChildUser = () => {
+export const getChildUser = (): string => {
   const childUser = process.env.CHILD_USER;
 
   if (!childUser) {
@@ -21,7 +21,7 @@ export const getChildUser = () => {
   return childUser;
 };
 
-export const getInfuraProjectId = () => {
+export const getInfuraProjectId = (): string => {
   const infuraProjectId = process.env.INFURA_PROJECT_ID;
 
   if (!infuraProjectId) {
@@ -31,7 +31,7 @@ export const getInfuraProjectId = () => {
   return infuraProjectId;
 };
 
-export const getZkEvmRpcUrl = () => {
+export const getZkEvmRpcUrl = (): string => {
   const zkEvmRpcUrl = process.env.ZKEVM_RPC_URL;
 
   if (!zkEvmRpcUrl) {
@@ -41,7 +41,7 @@ export const getZkEvmRpcUrl = () => {
   return zkEvmRpcUrl;
 };
 
-export const getExplorerApiKeyZkEvm = () => {
+export const getExplorerApiKeyZkEvm = (): string => {
   const explorerApiKeyZkEvm = process.env.EXPLORER_API_KEY_ZKEVM;
 
   if (!explorerApiKeyZkEvm) {
@@ -51,7 +51,7 @@ export const getExplorerApiKeyZkEvm = () => {
   return explorerApiKeyZkEvm;
 };
 
-export const getExplorerApiKeyGoerli = () => {
+export const getExplorerApiKeyGoerli = (): string => {
   const explorerApiKeyGoerli = process.env.EXPLORER_API_KEY_GOERLI;
 
   if (!explorerApiKeyGoerli) {
@@ -61,7 +61,7 @@ export const getExplorerApiKeyGoerli = () => {
   return explorerApiKeyGoerli;
 };
 
-export const getPrivateKeyZkEvm = () => {
+export const getPrivateKeyZkEvm = (): string => {
   const privateKeyZkEvm = process.env.PRIVATE_KEY_ZKEVM;
 
   if (!privateKeyZkEvm) {
@@ -71,7 +71,7 @@ export const getPrivateKeyZkEvm = () => {
   return privateKeyZkEvm;
 };
 
-export const getPrivateKeyGoerli = () => {
+export const getPrivateKeyGoerli = (): string => {
   const privateKeyGoerli = process.env.PRIVATE_KEY_GOERLI;
 
   if (!privateKeyGoerli) {
