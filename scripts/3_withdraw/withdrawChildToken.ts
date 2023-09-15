@@ -44,7 +44,7 @@ export async function withdrawChildToken() {
       let withdrawResponse: ITransactionWriteResult = await childToken.withdraw(amount, getChildUser());
       await sleep(60000); // wait at least 60sec for state change
 
-      console.log(`Approve transaction hash: `, await withdrawResponse.getTransactionHash());
+      console.log(`Withdraw transaction hash: `, await withdrawResponse.getTransactionHash());
       console.log(
         `Transaction details: https://zkevm.polygonscan.com/tx/${await withdrawResponse.getTransactionHash()}`
       );
