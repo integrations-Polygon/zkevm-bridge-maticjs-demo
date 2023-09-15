@@ -8,19 +8,23 @@ import {
 } from "../../config";
 import { use, ZkEvmClient } from "@maticnetwork/maticjs";
 import HDWalletProvider from "@truffle/hdwallet-provider";
-import { Web3ClientPlugin } from "@maticnetwork/maticjs-ethers";
+import { Web3ClientPlugin } from "@maticnetwork/maticjs-web3";
 
 use(Web3ClientPlugin);
 
-export async function getZkEvmClient(network = "testnet", version = "blueberry") {
+export async function getZkEvmClient(
+  network = "testnet",
+  version = "blueberry"
+): Promise<ZkEvmClient | undefined> {
   try {
-    const zkEvmClient = new ZkEvmClient();
+    const zkEvmClient: ZkEvmClient = new ZkEvmClient();
+
     return await zkEvmClient.init({
       network: network,
       version: version,
       parent: {
         provider: new HDWalletProvider(
-          getPrivateKeyGoerli(),
+          [getPrivateKeyGoerli()],
           `https://goerli.infura.io/v3/${getInfuraProjectId()}`
         ),
         defaultConfig: {
@@ -28,7 +32,7 @@ export async function getZkEvmClient(network = "testnet", version = "blueberry")
         },
       },
       child: {
-        provider: new HDWalletProvider(getPrivateKeyZkEvm(), getZkEvmRpcUrl()),
+        provider: new HDWalletProvider([getPrivateKeyZkEvm()], getZkEvmRpcUrl()),
         defaultConfig: {
           from: getChildUser(),
         },
