@@ -41,16 +41,6 @@ export const getZkEvmRpcUrl = (): string => {
   return zkEvmRpcUrl;
 };
 
-export const getExplorerApiKeyZkEvm = (): string => {
-  const explorerApiKeyZkEvm = process.env.EXPLORER_API_KEY_ZKEVM;
-
-  if (!explorerApiKeyZkEvm) {
-    throw new Error("EXPLORER_API_KEY_ZKEVM environment variable is not set.");
-  }
-
-  return explorerApiKeyZkEvm;
-};
-
 export const getExplorerApiKeyGoerli = (): string => {
   const explorerApiKeyGoerli = process.env.EXPLORER_API_KEY_GOERLI;
 

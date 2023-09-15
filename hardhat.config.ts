@@ -9,7 +9,6 @@ import {
   getExplorerApiKeyGoerli,
   getPrivateKeyGoerli,
   getZkEvmRpcUrl,
-  getExplorerApiKeyZkEvm,
   getInfuraProjectId,
   getPrivateKeyZkEvm,
 } from "./config";
@@ -33,11 +32,6 @@ const config: HardhatUserConfig = {
     },
   },
   networks: {
-    zkEVM: {
-      url: getZkEvmRpcUrl(),
-      gasPrice: "auto",
-      accounts: getPrivateKeyZkEvm() !== undefined ? [getPrivateKeyZkEvm()] : [],
-    },
     goerli: {
       url: `https://goerli.infura.io/v3/${getInfuraProjectId()}`,
       gasPrice: "auto",
@@ -56,8 +50,7 @@ const config: HardhatUserConfig = {
     currency: "USD",
   },
   etherscan: {
-    //apiKey: getExplorerApiKeyGoerli() || "",
-    apiKey: getExplorerApiKeyZkEvm() || "",
+    apiKey: getExplorerApiKeyGoerli() || "",
     customChains: [
       {
         network: "zkEVM",
