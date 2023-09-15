@@ -1,10 +1,13 @@
-import { sleep } from "../utils/sleep";
 import { getZkEvmClient } from "../utils/zkEvmClient";
 import { getChildUser } from "../../config";
+import { sleep } from "../utils/utilityFunctions";
 import ps from "prompt-sync";
+import { ZkEvmClient, ITransactionWriteResult } from "@maticnetwork/maticjs";
+import { ERC20 } from "@maticnetwork/maticjs/dist/ts/zkevm/erc20";
+
 const prompt = ps();
 
-const withdrawChildToken = async () => {
+export async function withdrawChildToken() {
   try {
     console.log("\n-----------------------------------------");
     console.log("WITHDRAW CHILD TOKEN");
@@ -12,13 +15,13 @@ const withdrawChildToken = async () => {
 
     /* ---------------------------- INPUT ------------------------------ */
 
-    const childTokenAddress = prompt("Enter the address of Child Token to withdraw: ");
+    const childTokenAddress: string | null = prompt("Enter the address of Child Token to withdraw: ");
     if (!childTokenAddress) return console.log("The address of Child Token to withdrawl cannot be null");
     if (childTokenAddress.length !== 42) return console.log(`${childTokenAddress} is not a valid address`);
 
-    const amount = prompt("Enter the total amount of Child Token to withdraw: ");
+    const amount: string | null = prompt("Enter the total amount of Child Token to withdraw: ");
     if (!amount) return console.log("Total amount of Child Token to withdraw cannot be null");
-    if (amount <= 0)
+    if (Number(amount) <= 0)
       return console.log("Total amount of Child Token to withdraw cannot be less than or equal to zero");
 
     /* ---------------------------- SETUP ------------------------------ */
@@ -26,9 +29,9 @@ const withdrawChildToken = async () => {
     /* 
       SETUP ZKEVM CLIENT
     */
-    const zkEvmClient = await getZkEvmClient();
+    const zkEvmClient: ZkEvmClient | undefined = await getZkEvmClient();
     if (zkEvmClient) {
-      let childToken = zkEvmClient.erc20(childTokenAddress);
+      let childToken: ERC20 = zkEvmClient.erc20(childTokenAddress);
 
       /* ---------------------------- WITHDRAWAL ---------------------------- */
 
@@ -38,8 +41,9 @@ const withdrawChildToken = async () => {
       console.log("\n-----------------------------------------");
       console.log("WITHDRAW - CHILD TOKEN");
       console.log("-----------------------------------------\n");
-      let withdrawResponse = await childToken.withdraw(amount, getChildUser());
-      await sleep(20000); // wait at least 15 for state change in goerli
+      let withdrawResponse: ITransactionWriteResult = await childToken.withdraw(amount, getChildUser());
+      await sleep(60000); // wait at least 60sec for state change
+
       console.log(`Approve transaction hash: `, await withdrawResponse.getTransactionHash());
       console.log(
         `Transaction details: https://zkevm.polygonscan.com/tx/${await withdrawResponse.getTransactionHash()}`
@@ -50,19 +54,9 @@ const withdrawChildToken = async () => {
         `\nNext step is to Withdraw Exit, kindly store the Transaction Hash: ${await withdrawResponse.getTransactionHash()}`
       );
     } else {
-      console.error("zkEvmClient is undefined");
+      console.log("zkEvmClient is undefined");
     }
   } catch (error) {
     console.log("Error in withdrawChildToken: ", error);
   }
-};
-
-withdrawChildToken()
-  .then(() => {
-    console.log("\n\n---------- ENDING ALL PROCESS ----------\n\n");
-    process.exit(0);
-  })
-  .catch((err) => {
-    console.error("err", err);
-    process.exit(1);
-  });
+}

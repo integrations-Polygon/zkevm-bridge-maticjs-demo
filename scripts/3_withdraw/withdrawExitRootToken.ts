@@ -1,10 +1,12 @@
-import { sleep } from "../utils/sleep";
+import { ERC20 } from "@maticnetwork/maticjs/dist/ts/zkevm/erc20";
+import { sleep } from "../utils/utilityFunctions";
 import { getZkEvmClient } from "../utils/zkEvmClient";
-import { getRootUser } from "../../config";
+import { ZkEvmClient, ITransactionWriteResult } from "@maticnetwork/maticjs";
+
 import ps from "prompt-sync";
 const prompt = ps();
 
-const withdrawExitRootToken = async () => {
+export async function withdrawExitRootToken() {
   try {
     console.log("\n-----------------------------------------");
     console.log("WITHDRAW ROOT TOKEN");
@@ -28,9 +30,9 @@ const withdrawExitRootToken = async () => {
     /* 
       SETUP ZKEVM CLIENT
     */
-    const zkEvmClient = await getZkEvmClient();
+    const zkEvmClient: ZkEvmClient | undefined = await getZkEvmClient();
     if (zkEvmClient) {
-      let rootToken = zkEvmClient.erc20(rootTokenAddress);
+      let rootToken: ERC20 = zkEvmClient.erc20(rootTokenAddress);
 
       /* ---------------------------- WITHDRAW EXIT ---------------------------- */
 
@@ -40,8 +42,8 @@ const withdrawExitRootToken = async () => {
       console.log("\n-----------------------------------------");
       console.log("WITHDRAWEXIT - ROOT TOKEN");
       console.log("-----------------------------------------\n");
-      let withdrawExitResponse = await rootToken.withdrawExit(transactionHash);
-      await sleep(20000); // wait at least 20 for state change in goerli
+      let withdrawExitResponse: ITransactionWriteResult = await rootToken.withdrawExit(transactionHash);
+      await sleep(60000); // wait at least 60sec for state change
       console.log(`WithdrawExit transaction hash: `, await withdrawExitResponse.getTransactionHash());
       console.log(
         `Transaction details: https://goerli.etherscan.io/tx/${await withdrawExitResponse.getTransactionHash()}`
@@ -49,19 +51,9 @@ const withdrawExitRootToken = async () => {
 
       console.log("\nTokens Withdrawal Exit successfully");
     } else {
-      console.error("zkEvmClient is undefined");
+      console.log("zkEvmClient is undefined");
     }
   } catch (error) {
     console.log("Error in withdrawExitRootToken: ", error);
   }
-};
-
-withdrawExitRootToken()
-  .then(() => {
-    console.log("\n\n---------- ENDING ALL PROCESS ----------\n\n");
-    process.exit(0);
-  })
-  .catch((err) => {
-    console.error("err", err);
-    process.exit(1);
-  });
+}
