@@ -60,6 +60,7 @@ npx hardhat run --network goerli scripts/0_deploy/deploy_rootToken.ts
 2. **Claim deposited Root Token on L2 zkEVM bridge.**
 
    - After depositing on L1, use this to claim the equivalent amount on L2 by providing the child token address and the transaction hash of your L1 deposit.
+   - This operation is not required as there is an auto claim mechanism in place.
 
 3. **Withdraw Child Token on L2 zkEVM bridge.**
 
@@ -85,6 +86,7 @@ npx hardhat run --network goerli scripts/0_deploy/deploy_rootToken.ts
 8. **Check Root Token to Child Token Mapping.**
 
    - Provide a root token address to get its corresponding child token address on L2.
+   - This function does not work correctly, always returns 0x00 address
 
 9. **Check if withdrawn Child Token can exit on L1 zkEVM bridge contract.**
 
