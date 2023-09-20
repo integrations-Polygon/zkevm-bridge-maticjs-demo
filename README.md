@@ -94,6 +94,17 @@ npx hardhat run --network goerli scripts/0_deploy/deploy_rootToken.ts
 
 - Use this to safely terminate the script.
 
+### **Requirements**
+- To interact with the bridge, you'll need:
+   - Valid Ethereum addresses for Root and Child tokens.
+   - A transaction hash, for certain operations.
+   - Ensure that provided addresses and transaction hashes are valid to avoid errors.
+   
+### **Note**
+- The script incorporates waits (sleep(60000)) to accommodate for state changes that might take up to 60 seconds.
+- Always ensure that the zkEvmClient is defined before performing operations. This client is responsible for interactions with the zkEVM bridge.
+
+
 ### **Usage:**
 
 1. Start the script.
@@ -113,6 +124,8 @@ npx hardhat run scripts/startScript.ts
 - Always ensure you're providing valid Ethereum addresses (42 characters long) and valid transaction hashes (66 characters long).
 - If you encounter any errors during any operation, the script will display an error message. Read the error details to understand and rectify the issue.
 
+For further assistance, please refer to the zkEVM bridge's official documentation or contact support.
+
 ### **Feedback & Limitations:**
 
 - **[depositClaim()](https://wiki.polygon.technology/docs/zkevm/maticjs/zkevm-client-erc20/#depositclaim)** - While this method is referenced in the ERC20 Methods section of the documentation, it doesn't currently specify that the **"claim"** process is automated and the users don’t have to explicitly call this method. This omission can mislead new developers who rely on the documentation for scripting, causing them to mistakenly incorporate this method into their codes. Often, this results in errors, primarily because the claim either isn't claimable or has already been auto-claimed. The error messages provided are cryptic, often presenting as hexadecimal codes, making it challenging for developers to decipher the issue.
@@ -126,4 +139,8 @@ npx hardhat run scripts/startScript.ts
 - **isDeposited()** - Located in the Maticjs zkEvm bridge client, as specified in *zkevm_bridge_client.d.ts*, this method examines if a give txHash has been deposited or not and it checks if a deposit has been completed. While one would expect it to return true immediately after a successful deposit from a user's address to the bridge contract, this is not the case. Instead, it returns true only once the asset is minted on L2 and moved to the user's L2 address. Given this behavior, a more descriptive name for this method might be preferable.
 
 - **isDepositClaimable()** - Also found in the Maticjs zkEvm bridge client, as specified in *zkevm_bridge_client.d.ts*, this method examines if a given txHash is synchronized with the child chain. Although one would assume it returns true as soon as the deposit becomes claimable on L2, in practice, it returns true only when the asset is minted on L2 and transferred to the L2 user. This is often less noticeable since claiming is typically instantaneous and automated. However, in our scenario, both **isDeposited()** and **isDepositClaimable()** yield almost identical results, which can be confusing. A renaming to better reflect its actual functionality might be 
+
+### **Contributing**:
+If you encounter any issues or have suggestions for improvements, please open an issue or submit a pull request. We welcome community contributions.
+
   
