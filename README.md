@@ -96,7 +96,8 @@ npx hardhat run --network goerli scripts/0_deploy/deploy_rootToken.ts
 
 ### **Requirements**
 - To interact with the bridge, you'll need:
-   - Valid Ethereum addresses for Root and Child tokens.
+   - Valid Ethereum(Goerli) address for Root tokens.
+   - Valid Polygon(zkEVM) address for Child tokens after it has been deployed by the bridge contract on L2.
    - A transaction hash, for certain operations.
    - Ensure that provided addresses and transaction hashes are valid to avoid errors.
    
